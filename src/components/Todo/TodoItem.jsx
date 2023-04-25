@@ -50,7 +50,7 @@ export function TodoItem({ todo }) {
         <TodoForm
           submitText="Edit task"
           onSetIsShowForm={setIsEdit}
-          oldTask="old-task-name"
+          oldTask={todo.tasks}
         />
       )}
     </>
