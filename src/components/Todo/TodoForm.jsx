@@ -6,7 +6,7 @@ import React, { useState } from "react";
 // Mode-2 : Edit
 export function TodoForm({ onSetIsShowForm, submitText, oldTask }) {
   // # 1 : Logic Section
-  const [task, setTask] = useState(oldTask || " ");
+  const [task, setTask] = useState(oldTask || "");
   const [isError, setIsError] = useState(false);
 
   const handleSubmit = (e) => {

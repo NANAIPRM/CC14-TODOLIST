@@ -1,11 +1,12 @@
-import styles from "./TodoItem.module.scss";
+import styles from "./Todoitem.module.scss";
 import { useState } from "react";
 import { HiCheck, HiPencil, HiTrash } from "react-icons/hi";
 import { TodoForm } from "./TodoForm";
-
-export function TodoItem() {
+//todoSchema :  {id:1, task: asdadsasdas, status : false, due_date : 2002-04-20}
+export function TodoItem({ todo }) {
   // #1 : Logic,State
-  const [isCheck, setIsCheck] = useState(false);
+  // Check === DONE === todo.status == true
+  const [isCheck, setIsCheck] = useState(todo.status);
   const [isEdit, setIsEdit] = useState(false);
 
   const handleToggleCheck = () => {
@@ -35,7 +36,7 @@ export function TodoItem() {
           >
             <HiCheck className={checkboxStyle} />
           </div>
-          <p className={taskStyle}>{`OLD-TASK`}</p>
+          <p className={taskStyle}>{todo.tasks}</p>
 
           <div className={styles.edit__icon} onClick={handleOpenEditMode}>
             <HiPencil />
