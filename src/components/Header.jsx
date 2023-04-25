@@ -6,7 +6,7 @@ export function Header() {
       <span>
         <FaHome />
       </span>
-      <h3>CC-TODOLIST</h3>
+      <h3>NANINE-Todoist</h3>
     </header>
   );
 }
