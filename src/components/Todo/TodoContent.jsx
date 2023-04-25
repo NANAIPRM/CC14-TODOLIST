@@ -12,11 +12,11 @@ export function TodoContent() {
   // console.log(uuidv4());
   // console.log(uuidv4());
 
-  const handleAddTodo = () => {
+  const handleAddTodo = (newTask) => {
     // มี new todo
     let newTodoObj = {
       id: uuidv4(),
-      tasks: "DoHW",
+      tasks: newTask,
       status: false,
       due_date: "",
     };
@@ -36,8 +36,7 @@ export function TodoContent() {
   return (
     <main className="content">
       <TodoHeader />
-      <AddTodo />
-      <button onClick={handleAddTodo}>Test Add Todo</button>
+      <AddTodo onAddTodo={handleAddTodo} />
       <TodoLists todos={todos} />
     </main>
   );
