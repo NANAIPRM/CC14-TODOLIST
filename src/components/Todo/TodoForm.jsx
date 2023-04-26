@@ -1,12 +1,21 @@
 import styles from "./TodoForm.module.scss";
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+
+TodoForm.propTypes = {
+  submitText: PropTypes.string.isRequired,
+  onSetIsShowForm: PropTypes.func.isRequired,
+  onAddTodo: PropTypes.func,
+  onEditTodo: PropTypes.func,
+  todo: PropTypes.oneOfType([PropTypes.object]), // undefined , {id : number | string , task : string, status : bool, due_date:string}
+};
 
 // TodoForm => call in 2 Mode
 // Mode-1 : Add
 // Mode-2 : Edit
 export function TodoForm({
-  onSetIsShowForm,
   submitText,
+  onSetIsShowForm,
   todo,
   onAddTodo,
   onEditTodo,
@@ -19,15 +28,18 @@ export function TodoForm({
     e.preventDefault();
 
     // validate
+    // case 1 : not valid
+    // case 2A : valid-create
+    // case 2B : valid-update
     if (task.trim() === "") {
       setIsError(true);
       return;
-    } // validate passed , execute addTodo
+    }
+
+    // validate passed , execute addTodo
     // onAddTodo(task) // from <TodoContent/>
     if (todo) onEditTodo(todo.id, { task }); // send => 1.newTask 2. todoId
     else onAddTodo(task);
-    // set back to normal mode
-
     // set back to normal mode
     onSetIsShowForm(false);
   };

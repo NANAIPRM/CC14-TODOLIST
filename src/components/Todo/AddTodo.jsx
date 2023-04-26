@@ -21,7 +21,7 @@ export function AddTodo({ onAddTodo }) {
         </div>
       ) : (
         <TodoForm
-          submitText="Add task"
+          submitText="Add Task"
           onSetIsShowForm={setIsAddMode}
           onAddTodo={onAddTodo}
         />
