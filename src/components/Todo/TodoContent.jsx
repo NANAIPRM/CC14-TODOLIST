@@ -8,15 +8,13 @@ import mockData from "../../data/todos.json";
 export function TodoContent() {
   // # Logic
   const [todos, setTodos] = useState(mockData);
-  // console.log(uuidv4());
-  // console.log(uuidv4());
-  // console.log(uuidv4());
 
+  // ADD-TODO
   const handleAddTodo = (newTask) => {
     // มี new todo
     let newTodoObj = {
       id: uuidv4(),
-      tasks: newTask,
+      task: newTask,
       status: false,
       due_date: "",
     };
@@ -28,16 +26,49 @@ export function TodoContent() {
 
     // update state โดย callback
     setTodos((currentState) => [newTodoObj, ...currentState]);
-    // const newTodos = [newTodoObj, ...todos];
-    // setTodos(newTodos);
+  };
+
+  // UPDATE-TODO
+  // updateValue = {task: "Newtask", status : false}
+  const handleEditTodo = (todoId, updateObj) => {
+    // Modify Array
+    // #1 FindIndex
+    const foundedIndex = todos.findIndex((todoObj) => todoObj.id === todoId);
+    // Not founded
+    if (foundedIndex == -1) return;
+    // Founded
+    const newTodos = [...todos];
+    // let oldTodoObj = newTodos[foundedIndex]
+    // oldTodoObj.task = newTask
+    newTodos[foundedIndex] = { ...newTodos[foundedIndex], ...updateObj };
+    // { "id": 4, "task": "In congue. Etiam justo.", "status": false, "due_date": "2023-05-04" },
+    setTodos(newTodos);
+  };
+
+  const handleDelete = (todoId) => {
+    // Logic : Manipulate Array
+
+    // #1
+    // const foundedIndex = todos.findIndex(todoObj => todoObj.id === todoId)
+    // if(foundedIndex == -1) return;
+    // const newTodos = [...todos]
+    // newTodos.splice(foundedIndex,1)
+    // setTodos(newTodos)
+
+    // #2
+    setTodos((curr) => curr.filter((todoObj) => todoObj.id !== todoId));
   };
 
   // # UI
   return (
     <main className="content">
-      <TodoHeader />
+      <TodoHeader title="Today" />
       <AddTodo onAddTodo={handleAddTodo} />
-      <TodoLists todos={todos} />
+      <TodoLists
+        todos={todos}
+        onEditTodo={handleEditTodo}
+        onDeleteTodo={handleDelete}
+      />
     </main>
   );
 }

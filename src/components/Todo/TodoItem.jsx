@@ -2,29 +2,37 @@ import styles from "./Todoitem.module.scss";
 import { useState } from "react";
 import { HiCheck, HiPencil, HiTrash } from "react-icons/hi";
 import { TodoForm } from "./TodoForm";
+
 //todoSchema :  {id:1, task: asdadsasdas, status : false, due_date : 2002-04-20}
-export function TodoItem({ todo }) {
+export function TodoItem({ todo, onEditTodo, onDeleteTodo }) {
+  //prop = { todo:{id:1 task : "AA"}, onEditTodo: fn1, onDeleteTodo: fn2 }
+  // let todo = prop.todo
+  // let onEditTodo = prop.onEditTodo
   // #1 : Logic,State
   // Check === DONE === todo.status == true
-  const [isCheck, setIsCheck] = useState(todo.status);
   const [isEdit, setIsEdit] = useState(false);
+  // console.log(todo.id)
 
   const handleToggleCheck = () => {
-    setIsCheck(!isCheck);
+    // setIsCheck(!isCheck);
+    onEditTodo(todo.id, { status: !todo.status }); // handleEditTodo(todo.id, {status:!todo.status})
   };
 
   const handleOpenEditMode = () => {
     setIsEdit(true);
+    console.log(todo.id);
   };
 
   const handleDeleteTodo = () => {
     console.log("delete");
+    onDeleteTodo(todo.id);
+    // setTodos(currentTodos => currentTodos.filter(todoObj=> todoObj.id !== todo.id))
   };
 
-  let checkboxStyle = isCheck
+  let checkboxStyle = todo.status
     ? styles.checkbox__icon__done
     : styles.checkbox__icon;
-  let taskStyle = isCheck ? styles.done : "";
+  let taskStyle = todo.status ? styles.done : "";
   // #2 : render
   return (
     <>
@@ -36,7 +44,7 @@ export function TodoItem({ todo }) {
           >
             <HiCheck className={checkboxStyle} />
           </div>
-          <p className={taskStyle}>{todo.tasks}</p>
+          <p className={taskStyle}>{todo.task}</p>
 
           <div className={styles.edit__icon} onClick={handleOpenEditMode}>
             <HiPencil />
@@ -50,7 +58,9 @@ export function TodoItem({ todo }) {
         <TodoForm
           submitText="Edit task"
           onSetIsShowForm={setIsEdit}
-          oldTask={todo.tasks}
+          // oldTask={todo.task}
+          onEditTodo={onEditTodo}
+          todo={todo}
         />
       )}
     </>

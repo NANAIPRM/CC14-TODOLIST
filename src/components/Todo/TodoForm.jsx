@@ -4,9 +4,15 @@ import React, { useState } from "react";
 // TodoForm => call in 2 Mode
 // Mode-1 : Add
 // Mode-2 : Edit
-export function TodoForm({ onSetIsShowForm, submitText, oldTask, onAddTodo }) {
+export function TodoForm({
+  onSetIsShowForm,
+  submitText,
+  todo,
+  onAddTodo,
+  onEditTodo,
+}) {
   // # 1 : Logic Section
-  const [task, setTask] = useState(oldTask || "");
+  const [task, setTask] = useState(todo?.task || "");
   const [isError, setIsError] = useState(false);
 
   const handleSubmit = (e) => {
@@ -16,10 +22,11 @@ export function TodoForm({ onSetIsShowForm, submitText, oldTask, onAddTodo }) {
     if (task.trim() === "") {
       setIsError(true);
       return;
-    } else {
-      // validate passed , execute addTodo
-      onAddTodo(task); // from <TodoContent/>
-    }
+    } // validate passed , execute addTodo
+    // onAddTodo(task) // from <TodoContent/>
+    if (todo) onEditTodo(todo.id, { task }); // send => 1.newTask 2. todoId
+    else onAddTodo(task);
+    // set back to normal mode
 
     // set back to normal mode
     onSetIsShowForm(false);
